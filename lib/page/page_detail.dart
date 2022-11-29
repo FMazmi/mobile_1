@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../model/model_characters.dart';
 import 'page_characters.dart';
@@ -13,34 +14,67 @@ class DetailCharacters extends StatefulWidget {
 
 class _DetailCharactersState extends State<DetailCharacters> {
   bool isFavorite = false;
+  String Status = "bruh";
+  // bool? status = ;
+
+  // Future<>void alive(bool? status){
+  //   // bool? status;
+  //   // status = widget.character?.alive;
+  //   if(status=true){
+  //     setState(() {
+  //       Status = "Alive";
+  //       print(Status);
+  //     });
+  //   }else {
+  //     setState(() {
+  //       Status = "Deceased";
+  //       print(Status);
+  //     });
+  //   }
+  // print(Status);
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: (isFavorite) ? Colors.green.withOpacity(0.7) : Colors.white,
-        appBar: AppBar(
-          title: Text('${widget.character?.name}'),
-          actions: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  isFavorite = !isFavorite;
-                });
-              },
-              icon: (isFavorite)
-                  ? Icon(Icons.favorite)
-                  : Icon(Icons.favorite_border),
-            ),
-          ],
+      // backgroundColor: (isFavorite) ? Colors.yellow : Colors.white,
+
+      appBar: AppBar(
+        title: Text('${widget.character?.name}'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                isFavorite = !isFavorite;
+              });
+            },
+            icon: (isFavorite)
+                ? Icon(Icons.favorite)
+                : Icon(Icons.favorite_border),
+          ),
+        ],
+      ),
+      body: Container(
+        padding: EdgeInsets.only(
+          top: 40,
         ),
-        body: Column(
+        // alignment: Alignment.center,
+        // height: 220.00,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: (isFavorite)
+              ? AssetImage("assets/image/wp2.jpg")
+              : AssetImage("assets/image/wp1.jpg"),
+          fit: BoxFit.cover,
+        )
+            // color: (isFavorite) ? Colors.yellow : Colors.white,
+            ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Container(
-              padding: EdgeInsets.only(top: 20.0,),
-              height: 220.00,
-              decoration: BoxDecoration(
-                color: (isFavorite) ? Colors.yellow : Colors.white,
-              ),
+            Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
                 child: Image.network(
@@ -52,56 +86,117 @@ class _DetailCharactersState extends State<DetailCharacters> {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    "${widget.character?.name}",
-                    style: TextStyle(
-                        color: (isFavorite)
-                            ? Colors.yellow
-                            : Colors.black,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '${widget.character?.gender}',
-                    style:
-                    TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
-                  ),
-                  Text(
-                    'Tanggal Lahir : ${widget.character?.dateOfBirth}',
-                    style:
-                    TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'About Game',
-                    style:
-                    TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: Text(
-                      '${widget.character?.alive}',
-                      textAlign: TextAlign.justify,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: Container(
+                  width: 310,
+                  decoration: BoxDecoration(
+                      color: (isFavorite)
+                          ? Colors.white38.withOpacity(0.5)
+                          : Colors.blueAccent.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(10)),
+                  alignment: Alignment.center,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "${widget.character?.name}",
+                        style: TextStyle(
+                            color:
+                                (isFavorite) ? Colors.blueAccent : Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Gender : ${widget.character?.gender}',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'House : ${widget.character?.house}',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Ancestry : ${widget.character?.ancestry}",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Species : ${widget.character?.species}",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Tanggal Lahir : ${widget.character?.dateOfBirth}',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Alive : ${widget.character?.alive}',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Patronus : ${widget.character?.patronus}",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Actor : ${widget.character?.actor}",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  )),
             ),
           ],
-        ));
+        ),
+      ),
+      // Container(
+      //   padding: EdgeInsets.symmetric(horizontal: 10),
+      //   alignment: Alignment.center,
+      //   child: Column(
+      //     crossAxisAlignment: CrossAxisAlignment.start,
+      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //     children: [
+      //
+      //     ],
+      //   ),
+      // ),
+    );
   }
 }

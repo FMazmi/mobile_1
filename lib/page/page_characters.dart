@@ -1,8 +1,9 @@
-import 'dart:html';
+// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project_mobile/page/page_detail.dart';
 import 'package:project_mobile/service/base_network.dart';
+import 'package:project_mobile/service/data_source.dart';
 import '../model/model_characters.dart';
 
 class PageCharacters extends StatefulWidget {
@@ -26,7 +27,7 @@ class _PageCharactersState extends State<PageCharacters> {
   Widget _buildDetailCharactersBody() {
     return Container(
       child: FutureBuilder(
-        future: BaseNetwork.get(''),
+        future: CharactersSource.instance.loadCharacters(),
         builder: (
           BuildContext context,
           AsyncSnapshot<dynamic> snapshot,
@@ -64,70 +65,58 @@ class _PageCharactersState extends State<PageCharacters> {
   Widget _buildSuccessSection(CharactersDataModel data) {
     return Container(
       padding: EdgeInsets.all(10.0),
-        child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-            ),
-            itemCount: data.characters?.length,
-            itemBuilder: (BuildContext context, int index) {
-              final CharactersData? characters = data.characters?[index];
-              return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                DetailCharacters(character: characters)));
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.6),
-                          offset: Offset(
-                            0.0,
-                            10.0,
-                          ),
-                          blurRadius: 10.0,
-                          spreadRadius: -6.0,
+      child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+          ),
+          itemCount: 20,
+          itemBuilder: (BuildContext context, int index) {
+            final CharactersData? characters = data.characters?[index];
+            return InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              DetailCharacters(character: characters)));
+                },
+                child: Stack(
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Padding(
+                    //   padding: EdgeInsets.only(top: 210.0),
+                    // ),
+                    Container(
+                      width: 250,
+                      height: 250,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  "${data.characters?[index].image}"),
+                              fit: BoxFit.cover)),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(5.0),
+                      alignment: Alignment.bottomCenter,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: <Color>[Colors.black12, Colors.black45],
                         ),
-                      ],
-                      image: DecorationImage(
-                        colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.35),
-                          BlendMode.multiply,
-                        ),
-                        image: NetworkImage("${data.characters?[index].image}"),
-                        fit: BoxFit.cover,
+                      ),
+                      child: Text(
+                        '${data.characters?[index].name}',
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
                       ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: 210.0),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(color: Colors.black54),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Text(
-                              "${data.characters?[index].name}",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white70),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ));
-            }),
+                  ],
+                ));
+          }),
     );
 
     // title: Text("${data.characters?[index].title}"),

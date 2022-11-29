@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project_mobile/main_screen.dart';
 import 'package:project_mobile/page/page_characters.dart';
-import 'login_page.dart';
+import 'package:project_mobile/page_login.dart';
+import 'package:project_mobile/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Aplikasi',
-      home: LoginPage(),
+      home: SplashScreen(),
     );
   }
 }
